@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="integrationPlatform:war">
-    <output-path>$PROJECT_DIR$/../integrationPlatform/dev/target</output-path>
-    <root id="archive" name="integrationPlatform.war">
-      <element id="artifact" artifact-name="integrationPlatform:war exploded" />
-    </root>
-  </artifact>
-</component>
