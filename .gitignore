@@ -1,10 +1,15 @@
-[plain] view plaincopy
 #过滤文件  
-*.idea  
-*.iml  
-*.sln  
-*.config  
-
+*.iml
 #过滤文件夹  
-.idea/  
-logs/  
+.idea/
+.idea/*.xml
+logs/
+logs/*.log
+target/
+target/*.class
+target/*.xml
+target/*.html
+target/*.css
+target/*.js
+target/*.properties
+target/*.lst 
