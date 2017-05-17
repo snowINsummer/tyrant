@@ -13,7 +13,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @SpringBootApplication
 @ServletComponentScan
@@ -56,4 +57,16 @@ public class TyrantApplication extends SpringBootServletInitializer {
 		source.registerCorsConfiguration("/**", buildConfig()); // 4
 		return new CorsFilter(source);
 	}
+
+/*
+	@Bean
+    public MultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(5000000);
+        multipartResolver.setMaxInMemorySize(5000000);
+        multipartResolver.setDefaultEncoding("utf-8");
+        return multipartResolver;
+    }
+*/
+
 }
