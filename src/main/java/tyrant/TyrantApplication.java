@@ -21,7 +21,7 @@ import org.springframework.web.filter.CorsFilter;
 @ComponentScan(basePackages = {"tyrant"})
 public class TyrantApplication extends SpringBootServletInitializer {
 
-	private static final Logger logger = LoggerFactory.getLogger(TyrantApplication.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
 	@Override
@@ -31,11 +31,13 @@ public class TyrantApplication extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
-		logger.debug("start...");
 		SpringApplication.run(TyrantApplication.class, args);
-		logger.debug("run...");
 	}
 
+    /**
+     * 跨域
+     * @return
+     */
 	private CorsConfiguration buildConfig() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.addAllowedOrigin("*");

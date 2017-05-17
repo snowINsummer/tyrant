@@ -1,10 +1,8 @@
 package tyrant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import qa.utils.JSONFormat;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.ReqData;
@@ -38,5 +36,12 @@ public class TestcaseResultController {
         }
         return rspData;
     }
+
+/*    @RequestMapping(value = "/uploadReport", method = RequestMethod.POST)
+    public RspData uploadReport(@RequestParam("file") MultipartFile file,
+                                @RequestParam("file") ){
+        RspData rspData = new RspData();
+        return rspData;
+    }*/
 
 }

@@ -13,7 +13,7 @@ public interface TestcaseService {
 
     Testcase queryTestcase(Integer moduleId, String testcaseName, Integer caseType);
 
-    void queryTestcase(SaveResultVo saveResultVo, WSResultItem wsResultItem);
+    void queryTestcase(SaveResultVo saveResultVo);
 
     List<Testcase> queryTestcase(Integer moduleId);
 }

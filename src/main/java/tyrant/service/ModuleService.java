@@ -12,7 +12,7 @@ import java.util.List;
 public interface ModuleService {
     Module queryModule(Integer projectId, String moduleName);
 
-    void queryModule(SaveResultVo saveResultVo, WSResultItem wsResultItem);
+    void queryModule(SaveResultVo saveResultVo);
 
     List<Module> queryModuleTestcase();
 

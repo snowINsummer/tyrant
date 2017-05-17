@@ -13,5 +13,5 @@ public interface ProjectService {
 
     Project queryProject(Integer productId, String projectName);
 
-    void queryProject(SaveResultVo saveResultVo, WSResultItem itemList);
+    void queryProject(SaveResultVo saveResultVo);
 }

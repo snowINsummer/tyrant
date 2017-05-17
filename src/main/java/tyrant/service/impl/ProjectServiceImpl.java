@@ -1,5 +1,7 @@
 package tyrant.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
@@ -19,6 +21,8 @@ import java.util.List;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     IProjectDao iProjectDao;
 
@@ -37,14 +41,17 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void queryProject(SaveResultVo saveResultVo, WSResultItem wsResultItem) {
+    public void queryProject(SaveResultVo saveResultVo) {
         // 根据 projectName productId 获取 projectId
         String projectName = saveResultVo.getProjectName();
-        String projectNameVo = wsResultItem.getProjectName();
-        if (null == projectName || !projectName.equals(projectNameVo) || null == saveResultVo.getProject()){
-            saveResultVo.setProjectName(projectNameVo);
-            saveResultVo.setProject(queryProject(saveResultVo.getProduct().getId(), saveResultVo.getProjectName()));
+        if (null != projectName && null == saveResultVo.getProject()){
+            saveResultVo.setProject(queryProject(saveResultVo.getProduct().getId(), projectName));
         }
+
+        if (null == projectName && null == saveResultVo.getProject()){
+            logger.error("null == projectName && null == saveResultVo.getProject()");
+        }
+
     }
 
 

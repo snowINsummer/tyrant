@@ -1,5 +1,7 @@
 package tyrant.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
@@ -18,6 +20,8 @@ import java.util.List;
 
 @Service
 public class TestcaseServiceImpl implements TestcaseService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     ITestcaseDao iTestcaseDao;
@@ -38,13 +42,10 @@ public class TestcaseServiceImpl implements TestcaseService {
     }
 
     @Override
-    public void queryTestcase(SaveResultVo saveResultVo, WSResultItem wsResultItem) {
+    public void queryTestcase(SaveResultVo saveResultVo) {
         // 根据 testcaseName moduleId 获取 testcaseId
         String testcaseName = saveResultVo.getTestcaseName();
-        String testcaseNameVo = wsResultItem.getTestcaseName();
-        if (null == testcaseName || !testcaseName.equals(testcaseNameVo) || null == saveResultVo.getTestcase()){
-            Integer moduleId = saveResultVo.getModule().getId();
-            saveResultVo.setTestcaseName(testcaseNameVo);
+        if (null != testcaseName && null == saveResultVo.getTestcase()){
             if (null == saveResultVo.getCaseType()){
                 if (testcaseName.contains(Constants.TESTCASE_TYPE_WS)) {
                     saveResultVo.setCaseType(0);
@@ -56,7 +57,11 @@ public class TestcaseServiceImpl implements TestcaseService {
                     saveResultVo.setCaseType(0);
                 }
             }
-            saveResultVo.setTestcase(queryTestcase(moduleId, saveResultVo.getTestcaseName(), saveResultVo.getCaseType()));
+            saveResultVo.setTestcase(queryTestcase(saveResultVo.getModule().getId(), testcaseName, saveResultVo.getCaseType()));
+        }
+
+        if (null == testcaseName && null == saveResultVo.getTestcase()){
+            logger.error("null == testcaseName && null == saveResultVo.getTestcase()");
         }
     }
 

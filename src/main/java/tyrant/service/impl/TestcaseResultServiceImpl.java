@@ -54,18 +54,21 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
         SaveResultVo saveResultVo = new SaveResultVo();
         saveResultVo.setCaseType(caseType);
         saveResultVo.setProduct(product);
+        saveResultVo.setProjectName(wsResult.getProjectName());
+        saveResultVo.setModuleName(wsResult.getModuleName());
+        saveResultVo.setTestcaseName(wsResult.getTestcaseName());
 
         List<TestcaseResult> listTR = new ArrayList();
         List<WSResultItem> itemList  = wsResult.getItemList();
         for(WSResultItem wsResultItem : itemList){
             // 根据 projectName productId 获取 projectId
-            projectService.queryProject(saveResultVo, wsResultItem);
+            projectService.queryProject(saveResultVo);
 
             // 根据 moduleName projectId 获取 moduleId
-            moduleService.queryModule(saveResultVo, wsResultItem);
+            moduleService.queryModule(saveResultVo);
 
             // 根据 testcaseName moduleId 获取 testcaseId
-            testcaseService.queryTestcase(saveResultVo, wsResultItem);
+            testcaseService.queryTestcase(saveResultVo);
             // 更细batchNo相关数据
             batchNoService.update(batchNo,saveResultVo.getTestcase());
 
