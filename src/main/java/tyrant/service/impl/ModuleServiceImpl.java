@@ -8,7 +8,11 @@ import tyrant.common.entity.SaveResultVo;
 import tyrant.common.entity.WSResultItem;
 import tyrant.dao.IModuleDao;
 import tyrant.entity.Module;
+import tyrant.entity.Testcase;
 import tyrant.service.ModuleService;
+import tyrant.service.TestcaseService;
+
+import java.util.List;
 
 /**
  * Created by zhangli on 10/5/2017.
@@ -19,9 +23,8 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Autowired
     IModuleDao iModuleDao;
-
-
-
+    @Autowired
+    TestcaseService testcaseService;
 
     @Override
     public Module queryModule(Integer projectId, String moduleName) {
@@ -46,5 +49,20 @@ public class ModuleServiceImpl implements ModuleService {
             saveResultVo.setModuleName(moduleNameVo);
             saveResultVo.setModule(queryModule(projectId, saveResultVo.getModuleName()));
         }
+    }
+
+    @Override
+    public List<Module> queryModuleTestcase() {
+        List<Module> moduleList = queryAll();
+        for (Module module : moduleList){
+            List<Testcase> testcaseList = testcaseService.queryTestcase(module.getId());
+            module.setTestcaseList(testcaseList);
+        }
+        return moduleList;
+    }
+
+    @Override
+    public List<Module> queryAll() {
+        return iModuleDao.findAll();
     }
 }

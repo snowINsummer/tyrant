@@ -1,10 +1,8 @@
 package tyrant.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhangli on 9/5/2017.
@@ -22,6 +20,9 @@ public class Module {
     private Date createTime;
     private Date updateTime;
     private Integer isActive;
+
+    @Transient
+    private List<Testcase> testcaseList;
 
     public Integer getId() {
         return id;
@@ -69,5 +70,13 @@ public class Module {
 
     public void setIsActive(Integer isActive) {
         this.isActive = isActive;
+    }
+
+    public List<Testcase> getTestcaseList() {
+        return testcaseList;
+    }
+
+    public void setTestcaseList(List<Testcase> testcaseList) {
+        this.testcaseList = testcaseList;
     }
 }

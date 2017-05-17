@@ -10,6 +10,8 @@ import tyrant.dao.ITestcaseDao;
 import tyrant.entity.Testcase;
 import tyrant.service.TestcaseService;
 
+import java.util.List;
+
 /**
  * Created by zhangli on 10/5/2017.
  */
@@ -56,5 +58,10 @@ public class TestcaseServiceImpl implements TestcaseService {
             }
             saveResultVo.setTestcase(queryTestcase(moduleId, saveResultVo.getTestcaseName(), saveResultVo.getCaseType()));
         }
+    }
+
+    @Override
+    public List<Testcase> queryTestcase(Integer moduleId) {
+        return iTestcaseDao.queryTestcase(moduleId);
     }
 }

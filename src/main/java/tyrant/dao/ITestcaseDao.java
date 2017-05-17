@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tyrant.entity.Testcase;
 
+import java.util.List;
+
 
 /**
  * Created by zhangli on 10/5/2017.
@@ -19,4 +21,6 @@ public interface ITestcaseDao extends JpaRepository<Testcase, Integer>{
     @Query("FROM Testcase where moduleId = :moduleId and testcaseName = :testcaseName and caseType = :caseType")
     Testcase queryTestcase(@Param("moduleId") Integer moduleId, @Param("testcaseName") String testcaseName, @Param("caseType") Integer caseType);
 
+    @Query("FROM Testcase where moduleId = :moduleId")
+    List<Testcase> queryTestcase(@Param("moduleId") Integer moduleId);
 }
