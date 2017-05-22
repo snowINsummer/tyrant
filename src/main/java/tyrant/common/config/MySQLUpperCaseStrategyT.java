@@ -2,7 +2,6 @@ package tyrant.common.config;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.boot.model.naming.*;
-import org.hibernate.internal.util.StringHelper;
 
 /**
  * Created by zhangli on 9/5/2017.

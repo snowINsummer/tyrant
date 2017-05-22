@@ -2,8 +2,6 @@ package tyrant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import qa.utils.JSONFormat;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.ReqData;

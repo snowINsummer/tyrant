@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.SaveResultVo;
-import tyrant.common.entity.WSResultItem;
 import tyrant.dao.IProjectDao;
 import tyrant.entity.Project;
 import tyrant.service.ProjectService;
