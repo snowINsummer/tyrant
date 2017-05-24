@@ -2,8 +2,6 @@ package tyrant.common.constants;
 
 public final class Constants {
 
-
-
     private Constants(){}
     
     public static final String CODE_SUCCESS = "10000";
@@ -19,5 +17,10 @@ public final class Constants {
     public static final int DB_DATA_ACTIVE = 1;
 
     public static final String XXD = "XXD";
+
+    public static final String WS_GET = "GET";
+    public static final String WS_POST = "POST";
+    public static final String WS_PATCH = "PATCH";
+    public static final String WS_PUT = "PUT";
 
 }
