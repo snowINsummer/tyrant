@@ -14,6 +14,7 @@ import tyrant.common.entity.WSDataVo;
 import tyrant.service.WSService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 //import javax.servlet.http.HttpSession;
 
 /**
@@ -36,10 +37,11 @@ public class WSController {
 //        session.getMaxInactiveInterval();
         try{
             String json = JSONFormat.getObjectToJson(reqData.getData());
-            WSDataVo wsResult = JSONFormat.fromJson(json, WSDataVo.class);
-            ResponseInfo responseInfo = wsService.sendMessage(wsResult);
+            WSDataVo wsDataVo = JSONFormat.fromJson(json, WSDataVo.class);
+            ResponseInfo responseInfo = wsService.sendMessage(wsDataVo);
+            Map map = JSONFormat.getMapFromJson(responseInfo.getContent());
             rspData.setCode(Constants.CODE_SUCCESS);
-            rspData.setData(responseInfo);
+            rspData.setData(map);
         }catch (Exception e){
             rspData.setData(e.getMessage());
             e.printStackTrace();

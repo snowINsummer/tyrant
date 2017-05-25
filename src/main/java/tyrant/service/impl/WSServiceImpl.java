@@ -1,5 +1,6 @@
 package tyrant.service.impl;
 
+import org.springframework.stereotype.Service;
 import qa.exception.HTTPException;
 import qa.httpClient.HttpClientUtil;
 import qa.httpClient.ResponseInfo;
@@ -12,13 +13,15 @@ import java.util.Map;
 /**
  * Created by zhangli on 24/5/2017.
  */
+
+@Service
 public class WSServiceImpl implements WSService {
 
     @Override
     public ResponseInfo sendMessage(WSDataVo wsResult) throws HTTPException {
 
         String url = wsResult.getUrl();
-        String type = wsResult.getType();
+        String type = wsResult.getType().toUpperCase();
         Map<String, String> headers = wsResult.getHeaders();
         Map<String, String> parameters = wsResult.getParameters();
         HttpClientUtil httpClientUtil = new HttpClientUtil();
