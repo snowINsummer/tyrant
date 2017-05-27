@@ -23,4 +23,8 @@ public final class Constants {
     public static final String WS_PATCH = "PATCH";
     public static final String WS_PUT = "PUT";
 
+    public static final String REQUEST_HEADERS_CLIENTID = "clientId";
+    public static final String REQUEST_HEADERS_CLIENTTIME = "clientTime";
+    public static final String JSON_TEMPLATE_HEADERS_S = "s";
+
 }

@@ -1,6 +1,7 @@
 package tyrant.service;
 
 import qa.exception.HTTPException;
+import qa.exception.RunException;
 import qa.httpClient.ResponseInfo;
 import tyrant.common.entity.WSDataVo;
 
@@ -9,5 +10,5 @@ import tyrant.common.entity.WSDataVo;
  */
 public interface WSService {
 
-    ResponseInfo sendMessage(WSDataVo wsResult) throws HTTPException;
+    ResponseInfo sendMessage(WSDataVo wsResult) throws HTTPException, RunException;
 }
