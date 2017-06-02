@@ -39,9 +39,14 @@ public class WSController {
             String json = JSONFormat.getObjectToJson(reqData.getData());
             WSDataVo wsDataVo = JSONFormat.fromJson(json, WSDataVo.class);
             ResponseInfo responseInfo = wsService.sendMessage(wsDataVo);
-            Map map = JSONFormat.getMapFromJson(responseInfo.getContent());
-            rspData.setCode(Constants.CODE_SUCCESS);
-            rspData.setData(map);
+            if (responseInfo.getStatus() == 200){
+                Map map = JSONFormat.getMapFromJson(responseInfo.getContent());
+                rspData.setCode(Constants.CODE_SUCCESS);
+                rspData.setData(map);
+            }else {
+                rspData.setData(responseInfo);
+            }
+
         }catch (Exception e){
             rspData.setData(e.getMessage());
             e.printStackTrace();

@@ -7,6 +7,7 @@ import qa.exception.HTTPException;
 import qa.exception.RunException;
 import qa.httpClient.HttpClientUtil;
 import qa.httpClient.ResponseInfo;
+import qa.utils.JSONFormat;
 import qa.utils.StringUtil;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.WSDataVo;
@@ -71,14 +72,25 @@ public class WSServiceImpl implements WSService {
     public String getClientSign(HttpClientUtil httpClientUtil, Map<String, String> headers, String rspBody) throws HTTPException, RunException {
         logger.info("获取sign...");
         Map<String, String> map = new HashMap<String, String>();
-        String clientId = headers.get(Constants.REQUEST_HEADERS_CLIENTID);
+//        String clientId = headers.get(Constants.REQUEST_HEADERS_CLIENTID);
+        String clientId = "XXD_LOAN_API";
+
         String clientTime = headers.get(Constants.REQUEST_HEADERS_CLIENTTIME);
         map.put(Constants.REQUEST_HEADERS_CLIENTID, clientId);
         map.put(Constants.REQUEST_HEADERS_CLIENTTIME, clientTime);
         String url = "http://dev.xxd.com/integrationPlatform/demo/createClientSign?client_id="+clientId+"&client_time="+clientTime+"&client_key=123456&bodyString="+ StringUtil.urlEncoderUTF8(rspBody);
         ResponseInfo responseInfo = httpClientUtil.executeGetKeepConnWithHeaders(url,map);
         logger.info("sign="+responseInfo.getContent());
-        return responseInfo.getContent();
+        if (responseInfo.getStatus() == 200){
+            String content = responseInfo.getContent();
+            if (content.startsWith("{")){
+                throw new RunException("获取sing报错："+content);
+            }else {
+                return responseInfo.getContent();
+            }
+        }else {
+            throw new RunException("获取sing报错："+JSONFormat.getObjectToJson(responseInfo));
+        }
     }
 
 

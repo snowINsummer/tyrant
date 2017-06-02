@@ -15,15 +15,15 @@ import tyrant.common.entity.RspData;
  */
 
 @RestController
-@RequestMapping("/integrationPlatform")
+@RequestMapping("/swagger")
 public class IntegrationPlatformController {
 
     @RequestMapping(value = "/api-docs", method = RequestMethod.GET)
-    public RspData queryModuleTestcase(){
+    public RspData queryModuleTestcase(String platformName){
         RspData rspData = new RspData();
         HttpClientUtil httpClientUtil = new HttpClientUtil();
         try {
-            ResponseInfo responseInfo = httpClientUtil.executeGet("http://dev.xxd.com/integrationPlatform/v2/api-docs");
+            ResponseInfo responseInfo = httpClientUtil.executeGet("http://dev.xxd.com/"+platformName+"/v2/api-docs");
             rspData.setData(JSONFormat.getMapFromJson(responseInfo.getContent()));
             rspData.setCode(Constants.CODE_SUCCESS);
         } catch (HTTPException e) {
