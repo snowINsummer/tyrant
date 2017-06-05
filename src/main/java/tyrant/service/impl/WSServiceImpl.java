@@ -7,12 +7,15 @@ import qa.exception.HTTPException;
 import qa.exception.RunException;
 import qa.httpClient.HttpClientUtil;
 import qa.httpClient.ResponseInfo;
+import qa.utils.FileUtil;
 import qa.utils.JSONFormat;
 import qa.utils.StringUtil;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.WSDataVo;
 import tyrant.service.WSService;
 
+import javax.servlet.http.Part;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,25 +29,37 @@ public class WSServiceImpl implements WSService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public ResponseInfo sendMessage(WSDataVo wsResult) throws HTTPException, RunException {
+    public ResponseInfo sendMessage(WSDataVo wsResult) throws Exception {
         String url = wsResult.getUrl();
-        String type = wsResult.getType().toUpperCase();
-        Map<String, String> headers = wsResult.getHeaders();
         Map<String, String> parameters = wsResult.getParameters();
+        String paraStr = "";
+        for(Map.Entry<String, String> entry : parameters.entrySet()){
+            paraStr += entry.getKey() + "=" + entry.getValue() + "&";
+        }
+        url += "?" + paraStr;String type = wsResult.getType().toUpperCase();
+        Map<String, String> headers = wsResult.getHeaders();
         HttpClientUtil httpClientUtil = new HttpClientUtil();
         ResponseInfo responseInfo = new ResponseInfo();
         if (type.equals(Constants.WS_GET)){
-            String paraStr = "";
-            for(Map.Entry<String, String> entry : parameters.entrySet()){
-                paraStr += entry.getKey() + "=" + entry.getValue() + "&";
-            }
-            url += "?" + paraStr;
             responseInfo = httpClientUtil.executeGetKeepConnWithHeaders(url,headers);
         }else if(type.equals(Constants.WS_POST)){
             String json = wsResult.getJson();
             String newS = getClientSign(httpClientUtil,headers,json);
             headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
-            responseInfo = httpClientUtil.executePostKeepConnWithHeaders(url,headers,json);
+            Part part = wsResult.getFilePart();
+            if (null == part){
+                responseInfo = httpClientUtil.executePostKeepConnWithHeaders(url,headers,json);
+            }else {
+                headers.remove(Constants.REQUEST_HEADERS_CONTENTTYPE);
+                String fileName = part.getSubmittedFileName();
+                String tempPath = this.getClass().getResource("/").getPath()+"temp/";
+                FileUtil.createFloder(tempPath);
+                String filePath = tempPath + fileName;
+                FileUtil.saveFile(filePath,part.getInputStream());
+                File file = FileUtil.getFile(filePath);
+                responseInfo = httpClientUtil.executeUploadKeepConnWithHeaders(url,headers,file);
+                FileUtil.deleteFile(filePath);
+            }
         }else if(type.equals(Constants.WS_PATCH)){
             String json = wsResult.getJson();
             String newS = getClientSign(httpClientUtil,headers,json);
@@ -93,5 +108,28 @@ public class WSServiceImpl implements WSService {
         }
     }
 
+    private void saveFile(String saveFilePath, Part filePart) throws IOException {
+        OutputStream out = null;
+        InputStream filecontent = null;
+        try {
+
+            out = new FileOutputStream(new File(saveFilePath));
+            filecontent = filePart.getInputStream();
+
+            int read = 0;
+            final byte[] bytes = new byte[1024];
+
+            while ((read = filecontent.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+            if (filecontent != null) {
+                filecontent.close();
+            }
+        }
+    }
 
 }

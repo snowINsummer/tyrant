@@ -2,6 +2,7 @@ package tyrant.common.constants;
 
 public final class Constants {
 
+
     private Constants(){}
     
     public static final String CODE_SUCCESS = "10000";
@@ -26,5 +27,6 @@ public final class Constants {
     public static final String REQUEST_HEADERS_CLIENTID = "clientId";
     public static final String REQUEST_HEADERS_CLIENTTIME = "clientTime";
     public static final String JSON_TEMPLATE_HEADERS_S = "s";
+    public static final String REQUEST_HEADERS_CONTENTTYPE = "Content-Type";
 
 }

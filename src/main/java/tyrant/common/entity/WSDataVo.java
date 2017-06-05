@@ -1,5 +1,6 @@
 package tyrant.common.entity;
 
+import javax.servlet.http.Part;
 import java.util.Map;
 
 /**
@@ -12,6 +13,7 @@ public class WSDataVo {
     private Map<String,String> headers;
     private Map<String,String> parameters;
     private String json;
+    Part filePart;
 
     public String getUrl() {
         return url;
@@ -51,5 +53,13 @@ public class WSDataVo {
 
     public void setJson(String json) {
         this.json = json;
+    }
+
+    public Part getFilePart() {
+        return filePart;
+    }
+
+    public void setFilePart(Part filePart) {
+        this.filePart = filePart;
     }
 }

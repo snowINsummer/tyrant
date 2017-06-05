@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import qa.exception.HTTPException;
+import qa.exception.RunException;
 import qa.httpClient.ResponseInfo;
 import qa.utils.JSONFormat;
 import tyrant.common.constants.Constants;
@@ -13,7 +15,10 @@ import tyrant.common.entity.RspData;
 import tyrant.common.entity.WSDataVo;
 import tyrant.service.WSService;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import java.io.IOException;
 import java.util.Map;
 //import javax.servlet.http.HttpSession;
 
@@ -28,6 +33,7 @@ public class WSController {
 
     @Autowired
     WSService wsService;
+
     // TODO 获取客户端的session，生成一个session数据池，设定一个超时时间，超时后提示重新开始。
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
     public RspData saveResult(@RequestBody ReqData reqData, HttpServletRequest request){
@@ -53,5 +59,29 @@ public class WSController {
         }
         return rspData;
     }
+
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public RspData uploadFile(HttpServletRequest request){
+        RspData rspData = new RspData();
+        String data = request.getParameter("data");
+        WSDataVo wsDataVo = JSONFormat.fromJson(data, WSDataVo.class);
+        try {
+            Part filePart = request.getPart("file");
+            wsDataVo.setFilePart(filePart);
+            ResponseInfo responseInfo = wsService.sendMessage(wsDataVo);
+            if (responseInfo.getStatus() == 200){
+                Map map = JSONFormat.getMapFromJson(responseInfo.getContent());
+                rspData.setCode(Constants.CODE_SUCCESS);
+                rspData.setData(map);
+            }else {
+                rspData.setData(responseInfo);
+            }
+        } catch (Exception e) {
+            rspData.setData(e.getMessage());
+            e.printStackTrace();
+        }
+        return rspData;
+    }
+
 
 }
