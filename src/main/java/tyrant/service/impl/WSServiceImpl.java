@@ -40,12 +40,13 @@ public class WSServiceImpl implements WSService {
         Map<String, String> headers = wsResult.getHeaders();
         HttpClientUtil httpClientUtil = new HttpClientUtil();
         ResponseInfo responseInfo = new ResponseInfo();
+        String json = wsResult.getJson();
+        String newS = getClientSign(httpClientUtil,headers,json);
+        headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
         if (type.equals(Constants.WS_GET)){
             responseInfo = httpClientUtil.executeGetKeepConnWithHeaders(url,headers);
         }else if(type.equals(Constants.WS_POST)){
-            String json = wsResult.getJson();
-            String newS = getClientSign(httpClientUtil,headers,json);
-            headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
+
             Part part = wsResult.getFilePart();
             if (null == part){
                 responseInfo = httpClientUtil.executePostKeepConnWithHeaders(url,headers,json);
@@ -61,15 +62,15 @@ public class WSServiceImpl implements WSService {
                 FileUtil.deleteFile(filePath);
             }
         }else if(type.equals(Constants.WS_PATCH)){
-            String json = wsResult.getJson();
-            String newS = getClientSign(httpClientUtil,headers,json);
-            headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
+//            String json = wsResult.getJson();
+//            String newS = getClientSign(httpClientUtil,headers,json);
+//            headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
             responseInfo = httpClientUtil.executePatchKeepConnWithHeaders(url,headers,json);
 
         }else if(type.equals(Constants.WS_PUT)){
-            String json = wsResult.getJson();
-            String newS = getClientSign(httpClientUtil,headers,json);
-            headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
+//            String json = wsResult.getJson();
+//            String newS = getClientSign(httpClientUtil,headers,json);
+//            headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
             responseInfo = httpClientUtil.executePutKeepConnWithHeaders(url,headers,json);
         }
         return responseInfo;
