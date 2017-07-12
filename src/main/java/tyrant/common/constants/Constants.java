@@ -3,11 +3,12 @@ package tyrant.common.constants;
 public final class Constants {
 
 
+
     private Constants(){}
     
-    public static final String CODE_SUCCESS = "10000";
+    public static final int CODE_SUCCESS = 10000;
     
-    public static final String CODE_FAILED = "20000";
+    public static final int CODE_FAILED = 20000;
     public static final String SAVE_FAILURE = "Save failed.";
     public static final String SAVE_SUCCESS = "Save success.";
 
@@ -28,5 +29,9 @@ public final class Constants {
     public static final String REQUEST_HEADERS_CLIENTTIME = "clientTime";
     public static final String JSON_TEMPLATE_HEADERS_S = "s";
     public static final String REQUEST_HEADERS_CONTENTTYPE = "Content-Type";
+
+
+
+    public static final int DB_DATA_REPETITION = 100111;
 
 }

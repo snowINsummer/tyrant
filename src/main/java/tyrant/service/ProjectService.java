@@ -1,10 +1,9 @@
 package tyrant.service;
 
+import tyrant.body.ProjectInfo;
 import tyrant.common.entity.SaveResultVo;
-import tyrant.common.entity.WSResultItem;
+import tyrant.common.exception.TyrantException;
 import tyrant.entity.Project;
-
-import java.util.List;
 
 /**
  * Created by zhangli on 10/5/2017.
@@ -14,4 +13,6 @@ public interface ProjectService {
     Project queryProject(Integer productId, String projectName);
 
     void queryProject(SaveResultVo saveResultVo);
+
+    void save(ProjectInfo projectInfo) throws TyrantException;
 }

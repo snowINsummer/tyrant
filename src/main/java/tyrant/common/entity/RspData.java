@@ -11,19 +11,29 @@ public class RspData {
     /**
      * 响应状态码
      */
-    private String code = Constants.CODE_FAILED;
+    private int code = Constants.CODE_FAILED;
+
+    private String message = "操作成功";
 
     /**
      * 相应数据
      */
     private Object data;
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Object getData() {
