@@ -41,7 +41,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
     @Override
     public void saveResult(WSResult wsResult) {
         // 用例类型 ws || ui || ut
-        Integer caseType = wsResult.getCaseType();
+//        Integer caseType = wsResult.getCaseType();
         String productName = wsResult.getProductName();
         if (null == productName || productName.isEmpty()){
             // 默认产品：XXD
@@ -52,7 +52,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
         BatchNo batchNo = batchNoService.saveAndQuery(batchNoStr);
 
         SaveResultVo saveResultVo = new SaveResultVo();
-        saveResultVo.setCaseType(caseType);
+//        saveResultVo.setCaseType(caseType);
         saveResultVo.setProduct(product);
         saveResultVo.setProjectName(wsResult.getProjectName());
         saveResultVo.setModuleName(wsResult.getModuleName());

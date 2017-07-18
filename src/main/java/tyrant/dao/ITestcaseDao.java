@@ -18,8 +18,8 @@ import java.util.List;
 @Transactional
 public interface ITestcaseDao extends JpaRepository<Testcase, Integer>{
 
-    @Query("FROM Testcase where moduleId = :moduleId and testcaseName = :testcaseName and caseType = :caseType")
-    Testcase queryTestcase(@Param("moduleId") Integer moduleId, @Param("testcaseName") String testcaseName, @Param("caseType") Integer caseType);
+    @Query("FROM Testcase where moduleId = :moduleId and testcaseName = :testcaseName and environmentName = :environmentName and caseType = :caseType")
+    Testcase queryTestcase(@Param("moduleId") Integer moduleId, @Param("testcaseName") String testcaseName, @Param("environmentName") String environmentName, @Param("caseType") Integer caseType);
 
     @Query("FROM Testcase where moduleId = :moduleId")
     List<Testcase> queryTestcase(@Param("moduleId") Integer moduleId);

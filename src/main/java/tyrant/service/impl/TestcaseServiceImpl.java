@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.SaveResultVo;
+import tyrant.common.enums.Environment;
+import tyrant.common.enums.TestcaseType;
 import tyrant.dao.ITestcaseDao;
 import tyrant.entity.Testcase;
 import tyrant.service.TestcaseService;
@@ -26,12 +28,13 @@ public class TestcaseServiceImpl implements TestcaseService {
     ITestcaseDao iTestcaseDao;
 
     @Override
-    public Testcase queryTestcase(Integer moduleId, String testcaseName, Integer caseType) {
-        Testcase testcase = iTestcaseDao.queryTestcase(moduleId, testcaseName, caseType);
+    public Testcase queryTestcase(Integer moduleId, String testcaseName, String environmentName, Integer caseType) {
+        Testcase testcase = iTestcaseDao.queryTestcase(moduleId, testcaseName, environmentName, caseType);
         if (null == testcase){
             testcase = new Testcase();
             testcase.setModuleId(moduleId);
             testcase.setTestcaseName(testcaseName);
+            testcase.setEnvironmentName(environmentName);
             testcase.setCaseType(caseType);
             testcase.setCreateTime(DateFormat.getDate());
             testcase.setIsActive(Constants.DB_DATA_ACTIVE);
@@ -44,19 +47,26 @@ public class TestcaseServiceImpl implements TestcaseService {
     public void queryTestcase(SaveResultVo saveResultVo) {
         // 根据 testcaseName moduleId 获取 testcaseId
         String testcaseName = saveResultVo.getTestcaseName();
+
         if (null != testcaseName && null == saveResultVo.getTestcase()){
             if (null == saveResultVo.getCaseType()){
                 if (testcaseName.contains(Constants.TESTCASE_TYPE_WS)) {
-                    saveResultVo.setCaseType(0);
+                    Integer aa = TestcaseType.WS.type();
+                    saveResultVo.setCaseType(TestcaseType.WS.type());
                 }else if(testcaseName.contains(Constants.TESTCASE_TYPE_UI)){
-                    saveResultVo.setCaseType(1);
+                    saveResultVo.setCaseType(TestcaseType.UI.type());
                 }else if(testcaseName.contains(Constants.TESTCASE_TYPE_UT)){
-                    saveResultVo.setCaseType(2);
+                    saveResultVo.setCaseType(TestcaseType.UT.type());
                 }else {
-                    saveResultVo.setCaseType(0);
+                    saveResultVo.setCaseType(TestcaseType.WS.type());
+//                    saveResultVo.setCaseType(0);
                 }
             }
-            saveResultVo.setTestcase(queryTestcase(saveResultVo.getModule().getId(), testcaseName, saveResultVo.getCaseType()));
+            Environment environment = Environment.GET;
+            String environmentName = environment.getEnvironment(testcaseName);
+            Testcase testcase = queryTestcase(saveResultVo.getModule().getId(), testcaseName, environmentName, saveResultVo.getCaseType());
+
+            saveResultVo.setTestcase(testcase);
         }
 
         if (null == testcaseName && null == saveResultVo.getTestcase()){

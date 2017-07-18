@@ -20,6 +20,8 @@ public class Testcase {
     @Column(nullable = false)
     private String testcaseName;
     @Column(nullable = false)
+    private String environmentName;
+    @Column(nullable = false)
     private Integer caseType;
     private Date createTime;
     private Date updateTime;
@@ -47,6 +49,14 @@ public class Testcase {
 
     public void setTestcaseName(String testcaseName) {
         this.testcaseName = testcaseName;
+    }
+
+    public String getEnvironmentName() {
+        return environmentName;
+    }
+
+    public void setEnvironmentName(String environmentName) {
+        this.environmentName = environmentName;
     }
 
     public Integer getCaseType() {

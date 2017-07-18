@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface TestcaseService {
 
-    Testcase queryTestcase(Integer moduleId, String testcaseName, Integer caseType);
+    Testcase queryTestcase(Integer moduleId, String testcaseName, String environmentName, Integer caseType);
 
     void queryTestcase(SaveResultVo saveResultVo);
 
