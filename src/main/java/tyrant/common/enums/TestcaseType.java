@@ -9,34 +9,34 @@ public enum TestcaseType {
     WS(0),
     UI(1);
 
-    private final Integer type;
+    private final int type;
 
-    TestcaseType(Integer type){
+    TestcaseType(int type){
         this.type = type;
     }
 
-    public Integer type(){
+    public int type(){
         return type;
     }
 
     /*
     UT{
-        public Integer getTestcaseType(){
+        public int getTestcaseType(){
             return 2;
         }
     },
     WS{
-        public Integer getTestcaseType(){
+        public int getTestcaseType(){
             return 0;
         }
     },
     UI{
-        public Integer getTestcaseType(){
+        public int getTestcaseType(){
             return 1;
         }
     };
 
-    abstract public Integer getTestcaseType();
+    abstract public int getTestcaseType();
     */
 
 }

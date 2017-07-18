@@ -51,7 +51,6 @@ public class TestcaseServiceImpl implements TestcaseService {
         if (null != testcaseName && null == saveResultVo.getTestcase()){
             if (null == saveResultVo.getCaseType()){
                 if (testcaseName.contains(Constants.TESTCASE_TYPE_WS)) {
-                    Integer aa = TestcaseType.WS.type();
                     saveResultVo.setCaseType(TestcaseType.WS.type());
                 }else if(testcaseName.contains(Constants.TESTCASE_TYPE_UI)){
                     saveResultVo.setCaseType(TestcaseType.UI.type());
