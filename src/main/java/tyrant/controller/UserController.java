@@ -9,7 +9,7 @@ import qa.utils.JSONFormat;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.ReqData;
 import tyrant.common.entity.RspData;
-import tyrant.common.entity.UserWorkTime;
+import tyrant.body.UserWorkTime;
 import tyrant.entity.UserWorkTimeR;
 import tyrant.service.UserService;
 

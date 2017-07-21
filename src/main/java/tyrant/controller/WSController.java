@@ -5,20 +5,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import qa.exception.HTTPException;
-import qa.exception.RunException;
 import qa.httpClient.ResponseInfo;
 import qa.utils.JSONFormat;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.ReqData;
 import tyrant.common.entity.RspData;
-import tyrant.common.entity.WSDataVo;
+import tyrant.body.WSDataVo;
 import tyrant.service.WSService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import java.io.IOException;
 import java.util.Map;
 //import javax.servlet.http.HttpSession;
 

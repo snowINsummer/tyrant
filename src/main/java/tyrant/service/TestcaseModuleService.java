@@ -1,7 +1,7 @@
 package tyrant.service;
 
-import tyrant.common.entity.SaveResultVo;
-import tyrant.common.entity.WSResultItem;
+import tyrant.body.SaveResultVo;
+import tyrant.body.WSResultItem;
 import tyrant.entity.TestcaseModule;
 
 /**

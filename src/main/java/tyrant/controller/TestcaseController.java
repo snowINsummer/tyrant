@@ -3,15 +3,12 @@ package tyrant.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import qa.httpClient.ResponseInfo;
 import qa.utils.JSONFormat;
-import tyrant.common.constants.Constants;
 import tyrant.common.entity.RspData;
-import tyrant.common.entity.WSDataVo;
+import tyrant.body.WSDataVo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import java.util.Map;
 
 /**
  * Created by zhangli on 26/6/2017.

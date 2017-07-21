@@ -57,7 +57,7 @@ public class BatchNoServiceImpl implements BatchNoService {
         }
 
 //        batchNo.setBatchNoStr(batchNoStr);
-//        batchNo.setTestcaseId(testcaseId);
+//        batchNo.setListTestcaseId(testcaseId);
         iBatchNoDao.update(batchNoStr, testcaseId , batchNoId);
 
 

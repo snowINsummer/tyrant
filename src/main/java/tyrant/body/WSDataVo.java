@@ -1,4 +1,4 @@
-package tyrant.common.entity;
+package tyrant.body;
 
 import javax.servlet.http.Part;
 import java.util.Map;

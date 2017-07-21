@@ -1,11 +1,7 @@
 package tyrant.service;
 
-import qa.exception.HTTPException;
-import qa.exception.RunException;
 import qa.httpClient.ResponseInfo;
-import tyrant.common.entity.WSDataVo;
-
-import java.io.IOException;
+import tyrant.body.WSDataVo;
 
 /**
  * Created by zhangli on 24/5/2017.

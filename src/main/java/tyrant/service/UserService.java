@@ -1,6 +1,6 @@
 package tyrant.service;
 
-import tyrant.common.entity.UserWorkTime;
+import tyrant.body.UserWorkTime;
 import tyrant.entity.UserWorkTimeR;
 
 /**

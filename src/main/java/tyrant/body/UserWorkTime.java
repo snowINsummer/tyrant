@@ -1,4 +1,4 @@
-package tyrant.common.entity;
+package tyrant.body;
 
 /**
  * Created by zhangli on 16/6/2017.

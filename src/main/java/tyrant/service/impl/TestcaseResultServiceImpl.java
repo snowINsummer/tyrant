@@ -1,16 +1,26 @@
 package tyrant.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
+import qa.utils.StringUtil;
+import tyrant.body.QueryLastFiveDaysResult;
+import tyrant.body.TestcaseInfo;
+import tyrant.common.DataTransformObject.ChartModel;
+import tyrant.common.DataTransformObject.LastFiveDaysResult;
+import tyrant.common.DataTransformObject.SeriesModel;
 import tyrant.common.constants.Constants;
-import tyrant.common.entity.SaveResultVo;
-import tyrant.common.entity.WSResult;
-import tyrant.common.entity.WSResultItem;
+import tyrant.body.SaveResultVo;
+import tyrant.body.WSResult;
+import tyrant.body.WSResultItem;
 import tyrant.dao.ITestcaseResultDao;
 import tyrant.entity.*;
 import tyrant.service.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +30,8 @@ import java.util.List;
 
 @Service
 public class TestcaseResultServiceImpl implements TestcaseResultService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     ProductService productService;
@@ -40,6 +52,8 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
 
     @Override
     public void saveResult(WSResult wsResult) {
+        // TODO 保持失败原子性，在处理数据之前先验证数据是否满足要求。
+
         // 用例类型 ws || ui || ut
 //        Integer caseType = wsResult.getCaseType();
         String productName = wsResult.getProductName();
@@ -93,5 +107,58 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
         }
 
         iTestcaseResultDao.save(listTR);
+    }
+
+    @Override
+    public ChartModel queryLastFiveDaysResult(QueryLastFiveDaysResult queryLastFiveDaysResult) {
+        logger.debug("Start queryLastFiveDaysResult...");
+        ChartModel chartModel = new ChartModel();
+        SeriesModel seriesModel = new SeriesModel();
+        List<TestcaseInfo> testcaseInfoList =  queryLastFiveDaysResult.getTestcaseInfoList();
+        for(TestcaseInfo testcaseInfo : testcaseInfoList){
+            Integer testcaseId = testcaseInfo.getTestcaseId();
+            String testcaseName = testcaseInfo.getTestcaseName();
+            String evironment = testcaseInfo.getEvironment();
+//            chartModel.addCategoryList(testcaseName);
+            if (null == testcaseId){
+                Testcase testcase = testcaseService.queryTestcase(testcaseName);
+                if (null != testcase){
+                    testcaseId = testcase.getId();
+
+                    List<Object[]> list = iTestcaseResultDao.queryLastFiveDaysResult(testcaseId);
+                    Object[] objects = list.get(0);
+                    chartModel.addCategoryList(objects[0].toString());
+//                    LastFiveDaysResult lastFiveDaysResult = new LastFiveDaysResult();
+//                    lastFiveDaysResult.setModuleName(objects[0].toString());
+//                    lastFiveDaysResult.setLastFiveDaysSuccess(objects[1].toString());
+//                    lastFiveDaysResult.setLastFiveDaysFailure(objects[2].toString());
+//                    String success = lastFiveDaysResult.getLastFiveDaysSuccess();
+                    String success = objects[1].toString();
+                    seriesModel.addPassData(success.toString());
+                    String failure = objects[2].toString();
+//                    String failure = lastFiveDaysResult.getLastFiveDaysFailure();
+                    seriesModel.addFailData(failure.toString());
+                    BigDecimal bdS = new BigDecimal(success);
+                    BigDecimal bdF = new BigDecimal(failure);
+                    BigDecimal all = bdS.add(bdF);
+                    seriesModel.addTotalData(all.toString());
+                    String passRate = "--";
+                    if (all.longValue() != 0){
+                        String per = bdS.divide(all,5,RoundingMode.HALF_DOWN).multiply(new BigDecimal(100)).toPlainString();
+//                            String per = String.valueOf(Double.valueOf(passCount)/Double.valueOf(allCount) * 100);
+                        passRate = StringUtil.strNumberFormat(per, null, 2, RoundingMode.HALF_UP, StringUtil.formatStr);
+                    }
+                    seriesModel.addPassRateData(passRate);
+                }
+            }
+            logger.debug("testcaseId:"+testcaseId);
+            logger.debug("testcaseName:"+testcaseName);
+            logger.debug("evironment:"+evironment);
+
+
+        }
+
+        chartModel.setSeries(seriesModel);
+        return chartModel;
     }
 }

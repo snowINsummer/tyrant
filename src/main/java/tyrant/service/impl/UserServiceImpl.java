@@ -6,7 +6,7 @@ import qa.httpClient.ResponseInfo;
 import qa.utils.DateFormat;
 import qa.utils.JSONFormat;
 import qa.utils.StringUtil;
-import tyrant.common.entity.UserWorkTime;
+import tyrant.body.UserWorkTime;
 import tyrant.entity.UserWorkTimeR;
 import tyrant.service.UserService;
 

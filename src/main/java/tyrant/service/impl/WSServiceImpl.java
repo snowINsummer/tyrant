@@ -11,7 +11,7 @@ import qa.utils.FileUtil;
 import qa.utils.JSONFormat;
 import qa.utils.StringUtil;
 import tyrant.common.constants.Constants;
-import tyrant.common.entity.WSDataVo;
+import tyrant.body.WSDataVo;
 import tyrant.service.WSService;
 
 import javax.servlet.http.Part;

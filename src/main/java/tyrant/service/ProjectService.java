@@ -1,7 +1,7 @@
 package tyrant.service;
 
 import tyrant.body.ProjectInfo;
-import tyrant.common.entity.SaveResultVo;
+import tyrant.body.SaveResultVo;
 import tyrant.common.exception.TyrantException;
 import tyrant.entity.Project;
 

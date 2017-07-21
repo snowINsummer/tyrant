@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
 import tyrant.common.constants.Constants;
-import tyrant.common.entity.SaveResultVo;
+import tyrant.body.SaveResultVo;
 import tyrant.dao.IModuleDao;
 import tyrant.entity.Module;
 import tyrant.entity.Testcase;

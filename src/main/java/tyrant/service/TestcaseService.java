@@ -1,7 +1,6 @@
 package tyrant.service;
 
-import tyrant.common.entity.SaveResultVo;
-import tyrant.common.entity.WSResultItem;
+import tyrant.body.SaveResultVo;
 import tyrant.entity.Testcase;
 
 import java.util.List;
@@ -16,4 +15,6 @@ public interface TestcaseService {
     void queryTestcase(SaveResultVo saveResultVo);
 
     List<Testcase> queryTestcase(Integer moduleId);
+
+    Testcase queryTestcase(String testcaseName);
 }

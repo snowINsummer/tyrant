@@ -3,10 +3,12 @@ package tyrant.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import qa.utils.JSONFormat;
+import tyrant.body.QueryLastFiveDaysResult;
+import tyrant.common.DataTransformObject.ChartModel;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.ReqData;
 import tyrant.common.entity.RspData;
-import tyrant.common.entity.WSResult;
+import tyrant.body.WSResult;
 import tyrant.service.TestcaseResultService;
 
 import javax.servlet.ServletException;
@@ -57,6 +59,22 @@ public class TestcaseResultController {
 
         return rspData;
 
+    }
+
+    @RequestMapping(value = "/queryLastFiveDaysResult", method = RequestMethod.POST)
+    public RspData queryLastFiveDaysResult(@RequestBody ReqData reqData){
+        RspData rspData = new RspData();
+        try{
+            String json = JSONFormat.getObjectToJson(reqData.getData());
+            QueryLastFiveDaysResult queryLastFiveDaysResult = JSONFormat.fromJson(json, QueryLastFiveDaysResult.class);
+            ChartModel chartModel = trService.queryLastFiveDaysResult(queryLastFiveDaysResult);
+            rspData.setCode(Constants.CODE_SUCCESS);
+            rspData.setData(chartModel);
+        }catch (Exception e){
+            rspData.setData(e.getMessage());
+            e.printStackTrace();
+        }
+        return rspData;
     }
 
 }

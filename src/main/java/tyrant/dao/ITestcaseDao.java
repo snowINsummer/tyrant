@@ -23,4 +23,7 @@ public interface ITestcaseDao extends JpaRepository<Testcase, Integer>{
 
     @Query("FROM Testcase where moduleId = :moduleId")
     List<Testcase> queryTestcase(@Param("moduleId") Integer moduleId);
+
+    @Query("FROM Testcase where testcaseName = :testcaseName")
+    Testcase queryTestcase(@Param("testcaseName") String testcaseName);
 }

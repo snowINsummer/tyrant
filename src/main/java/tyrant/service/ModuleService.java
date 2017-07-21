@@ -1,7 +1,6 @@
 package tyrant.service;
 
-import tyrant.common.entity.SaveResultVo;
-import tyrant.common.entity.WSResultItem;
+import tyrant.body.SaveResultVo;
 import tyrant.entity.Module;
 
 import java.util.List;

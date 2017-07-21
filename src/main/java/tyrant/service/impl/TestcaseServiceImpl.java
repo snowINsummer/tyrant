@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
 import tyrant.common.constants.Constants;
-import tyrant.common.entity.SaveResultVo;
+import tyrant.body.SaveResultVo;
 import tyrant.common.enums.Environment;
 import tyrant.common.enums.TestcaseType;
 import tyrant.dao.ITestcaseDao;
@@ -61,6 +61,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 //                    saveResultVo.setCaseType(0);
                 }
             }
+
             Environment environment = Environment.GET;
             String environmentName = environment.getEnvironment(testcaseName);
             Testcase testcase = queryTestcase(saveResultVo.getModule().getId(), testcaseName, environmentName, saveResultVo.getCaseType());
@@ -73,8 +74,14 @@ public class TestcaseServiceImpl implements TestcaseService {
         }
     }
 
+
     @Override
     public List<Testcase> queryTestcase(Integer moduleId) {
         return iTestcaseDao.queryTestcase(moduleId);
+    }
+
+    @Override
+    public Testcase queryTestcase(String testcaseName) {
+        return iTestcaseDao.queryTestcase(testcaseName);
     }
 }
