@@ -3,7 +3,6 @@ package tyrant.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
 import qa.utils.StringUtil;
@@ -122,26 +121,16 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
             Integer testcaseId = testcaseInfo.getTestcaseId();
             String testcaseName = testcaseInfo.getTestcaseName();
             String evironment = testcaseInfo.getEvironment();
-//            chartModel.addCategoryList(testcaseName);
             if (null == testcaseId){
                 Testcase testcase = testcaseService.queryTestcase(testcaseName);
                 if (null != testcase){
                     testcaseId = testcase.getId();
-                    // TODO 改造查询方法
                     List<LastFiveDaysResult> lastFiveDaysResultList = jdbcTemplateService.queryLastFiveDaysResult(testcaseId);
                     LastFiveDaysResult lastFiveDaysResult = lastFiveDaysResultList.get(0);
-//                    List<Object[]> list = iTestcaseResultDao.queryLastFiveDaysResult(testcaseId);
-//                    Object[] objects = list.get(0);
                     chartModel.addCategoryList(lastFiveDaysResult.getModuleName());
-//                    LastFiveDaysResult lastFiveDaysResult = new LastFiveDaysResult();
-//                    lastFiveDaysResult.setModuleName(objects[0].toString());
-//                    lastFiveDaysResult.setLastFiveDaysSuccess(objects[1].toString());
-//                    lastFiveDaysResult.setLastFiveDaysFailure(objects[2].toString());
-//                    String success = lastFiveDaysResult.getLastFiveDaysSuccess();
                     Integer success = lastFiveDaysResult.getLastFiveDaysSuccess();
                     seriesModel.addPassData(success.toString());
                     Integer failure = lastFiveDaysResult.getLastFiveDaysFailure();
-//                    String failure = lastFiveDaysResult.getLastFiveDaysFailure();
                     seriesModel.addFailData(failure.toString());
                     BigDecimal bdS = new BigDecimal(success);
                     BigDecimal bdF = new BigDecimal(failure);
@@ -150,7 +139,6 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
                     String passRate = "--";
                     if (all.longValue() != 0){
                         String per = bdS.divide(all,5,RoundingMode.HALF_DOWN).multiply(new BigDecimal(100)).toPlainString();
-//                            String per = String.valueOf(Double.valueOf(passCount)/Double.valueOf(allCount) * 100);
                         passRate = StringUtil.strNumberFormat(per, null, 2, RoundingMode.HALF_UP, StringUtil.formatStr);
                     }
                     seriesModel.addPassRateData(passRate);
