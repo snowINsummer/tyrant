@@ -3,6 +3,7 @@ package tyrant.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
 import qa.utils.StringUtil;
@@ -49,6 +50,8 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
     BatchNoService batchNoService;
     @Autowired
     ITestcaseResultDao iTestcaseResultDao;
+    @Autowired
+    JdbcTemplateService jdbcTemplateService;
 
     @Override
     public void saveResult(WSResult wsResult) {
@@ -124,18 +127,20 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
                 Testcase testcase = testcaseService.queryTestcase(testcaseName);
                 if (null != testcase){
                     testcaseId = testcase.getId();
-
-                    List<Object[]> list = iTestcaseResultDao.queryLastFiveDaysResult(testcaseId);
-                    Object[] objects = list.get(0);
-                    chartModel.addCategoryList(objects[0].toString());
+                    // TODO 改造查询方法
+                    List<LastFiveDaysResult> lastFiveDaysResultList = jdbcTemplateService.queryLastFiveDaysResult(testcaseId);
+                    LastFiveDaysResult lastFiveDaysResult = lastFiveDaysResultList.get(0);
+//                    List<Object[]> list = iTestcaseResultDao.queryLastFiveDaysResult(testcaseId);
+//                    Object[] objects = list.get(0);
+                    chartModel.addCategoryList(lastFiveDaysResult.getModuleName());
 //                    LastFiveDaysResult lastFiveDaysResult = new LastFiveDaysResult();
 //                    lastFiveDaysResult.setModuleName(objects[0].toString());
 //                    lastFiveDaysResult.setLastFiveDaysSuccess(objects[1].toString());
 //                    lastFiveDaysResult.setLastFiveDaysFailure(objects[2].toString());
 //                    String success = lastFiveDaysResult.getLastFiveDaysSuccess();
-                    String success = objects[1].toString();
+                    Integer success = lastFiveDaysResult.getLastFiveDaysSuccess();
                     seriesModel.addPassData(success.toString());
-                    String failure = objects[2].toString();
+                    Integer failure = lastFiveDaysResult.getLastFiveDaysFailure();
 //                    String failure = lastFiveDaysResult.getLastFiveDaysFailure();
                     seriesModel.addFailData(failure.toString());
                     BigDecimal bdS = new BigDecimal(success);
@@ -155,10 +160,10 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
             logger.debug("testcaseName:"+testcaseName);
             logger.debug("evironment:"+evironment);
 
-
         }
 
         chartModel.setSeries(seriesModel);
         return chartModel;
     }
+
 }

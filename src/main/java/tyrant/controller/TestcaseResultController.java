@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import qa.utils.JSONFormat;
 import tyrant.body.QueryLastFiveDaysResult;
 import tyrant.common.DataTransformObject.ChartModel;
+import tyrant.common.DataTransformObject.LastFiveDaysResult;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.ReqData;
 import tyrant.common.entity.RspData;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.List;
 
 
 /**

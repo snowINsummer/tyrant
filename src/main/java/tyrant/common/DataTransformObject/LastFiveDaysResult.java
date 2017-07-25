@@ -6,22 +6,22 @@ package tyrant.common.DataTransformObject;
 public class LastFiveDaysResult {
 
     private String moduleName;
-    private String lastFiveDaysSuccess;
-    private String lastFiveDaysFailure;
+    private Integer lastFiveDaysSuccess;
+    private Integer lastFiveDaysFailure;
 
-    public String getLastFiveDaysSuccess() {
+    public Integer getLastFiveDaysSuccess() {
         return lastFiveDaysSuccess;
     }
 
-    public void setLastFiveDaysSuccess(String lastFiveDaysSuccess) {
+    public void setLastFiveDaysSuccess(Integer lastFiveDaysSuccess) {
         this.lastFiveDaysSuccess = lastFiveDaysSuccess;
     }
 
-    public String getLastFiveDaysFailure() {
+    public Integer getLastFiveDaysFailure() {
         return lastFiveDaysFailure;
     }
 
-    public void setLastFiveDaysFailure(String lastFiveDaysFailure) {
+    public void setLastFiveDaysFailure(Integer lastFiveDaysFailure) {
         this.lastFiveDaysFailure = lastFiveDaysFailure;
     }
 
