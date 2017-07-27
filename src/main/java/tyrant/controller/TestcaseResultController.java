@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import qa.utils.JSONFormat;
 import tyrant.body.QueryLastFiveDaysResult;
 import tyrant.common.DataTransformObject.ChartModel;
+import tyrant.common.DataTransformObject.LastFiveDaysResultReport;
 import tyrant.common.constants.Constants;
 import tyrant.common.entity.ReqData;
 import tyrant.common.entity.RspData;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -70,6 +72,22 @@ public class TestcaseResultController {
             ChartModel chartModel = trService.queryLastFiveDaysResult(queryLastFiveDaysResult);
             rspData.setCode(Constants.CODE_SUCCESS);
             rspData.setData(chartModel);
+        }catch (Exception e){
+            rspData.setData(e.getMessage());
+            e.printStackTrace();
+        }
+        return rspData;
+    }
+
+    @RequestMapping(value = "/queryLastFiveDaysResultReport", method = RequestMethod.POST)
+    public RspData queryLastFiveDaysResultReport(@RequestBody ReqData reqData){
+        RspData rspData = new RspData();
+        try{
+            String json = JSONFormat.getObjectToJson(reqData.getData());
+            QueryLastFiveDaysResult queryLastFiveDaysResult = JSONFormat.fromJson(json, QueryLastFiveDaysResult.class);
+            List<LastFiveDaysResultReport> lastFiveDaysResultReport = trService.queryLastFiveDaysResultReport(queryLastFiveDaysResult);
+            rspData.setCode(Constants.CODE_SUCCESS);
+            rspData.setData(lastFiveDaysResultReport);
         }catch (Exception e){
             rspData.setData(e.getMessage());
             e.printStackTrace();

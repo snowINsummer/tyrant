@@ -5,12 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
+import qa.utils.FileUtil;
 import qa.utils.StringUtil;
 import tyrant.body.QueryLastFiveDaysResult;
 import tyrant.body.TestcaseInfo;
-import tyrant.common.DataTransformObject.ChartModel;
-import tyrant.common.DataTransformObject.LastFiveDaysResult;
-import tyrant.common.DataTransformObject.SeriesModel;
+import tyrant.common.DataTransformObject.*;
 import tyrant.common.constants.Constants;
 import tyrant.body.SaveResultVo;
 import tyrant.body.WSResult;
@@ -19,10 +18,10 @@ import tyrant.dao.ITestcaseResultDao;
 import tyrant.entity.*;
 import tyrant.service.*;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by zhangli on 9/5/2017.
@@ -153,5 +152,64 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
         chartModel.setSeries(seriesModel);
         return chartModel;
     }
+
+    @Override
+    public List<LastFiveDaysResultReport> queryLastFiveDaysResultReport(QueryLastFiveDaysResult queryLastFiveDaysResult) {
+        logger.debug("Start queryLastFiveDaysResultReport...");
+        List<LastFiveDaysResultReport> reportList = new ArrayList<>();
+        List<TestcaseInfo> testcaseInfoList =  queryLastFiveDaysResult.getTestcaseInfoList();
+        for(TestcaseInfo testcaseInfo : testcaseInfoList){
+            LastFiveDaysResultReport lastFiveDaysResultReport = new LastFiveDaysResultReport();
+            String testcaseName = testcaseInfo.getTestcaseName();
+            String[] arr = testcaseName.split("_");
+            lastFiveDaysResultReport.setModuleName(arr[0]);
+            lastFiveDaysResultReport.setTestcaseName(testcaseName);
+            File report = FileUtil.getFile(Constants.FUNCTION_REPORT_PATH + File.separator + testcaseName);
+            File[] fileList = report.listFiles();
+            List<ReportInfo> reportInfoList = new ArrayList();
+            if (null != fileList){
+                getLastReport(fileList, 0, testcaseName,reportInfoList);
+                getLastReport(fileList, -1, testcaseName, reportInfoList);
+                getLastReport(fileList, -2, testcaseName, reportInfoList);
+                getLastReport(fileList, -3, testcaseName, reportInfoList);
+                getLastReport(fileList, -4, testcaseName, reportInfoList);
+            }
+            lastFiveDaysResultReport.setListReport(reportInfoList);
+            reportList.add(lastFiveDaysResultReport);
+        }
+
+        return reportList;
+    }
+
+    private void getLastReport(File[] fileList, int addNum, String testcaseName, List<ReportInfo> reportInfoList){
+        ReportInfo reportInfo = new ReportInfo();
+        TreeMap<Long,File> tm = new TreeMap<>();
+        String dateStr = DateFormat.getAddDay(addNum);
+        int fileNum = fileList.length;
+        for (int i = 0; i < fileNum; i++) {
+            Long tempLong = new Long(fileList[i].lastModified());
+            if(fileList[i].getName().startsWith(dateStr)){
+                tm.put(tempLong, fileList[i]);
+            }
+        }
+        if (!tm.isEmpty()){
+            Set<Long> set = tm.descendingKeySet();
+            Iterator<Long> it = set.iterator();
+            while (it.hasNext()) {
+//            ReportInfo reportInfo = new ReportInfo();
+                Object key = it.next();
+                Object objValue = tm.get(key);
+                File tempFile = (File) objValue;
+                String fileName = tempFile.getName();
+                reportInfo.setReportTime(fileName);
+                reportInfo.setReportLink(Constants.TOMCAT_URL+"/function/"+testcaseName+"/"+fileName+"/index.html");
+                reportInfoList.add(reportInfo);
+                break;
+//            reportInfoList.add(reportInfo);
+//            out.write("<li><a target=\"_blank\" style=\"font-size:12px;color:#000080\" href=\""+tomcatPath+"/"+project+"/"+tempFile.getName()+"/index.html\">"+tempFile.getName()+"</a></li>");
+            }
+        }
+    }
+
 
 }

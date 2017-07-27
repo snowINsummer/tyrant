@@ -3,7 +3,7 @@ package tyrant.service;
 import tyrant.body.QueryLastFiveDaysResult;
 import tyrant.common.DataTransformObject.ChartModel;
 import tyrant.body.WSResult;
-import tyrant.common.DataTransformObject.LastFiveDaysResult;
+import tyrant.common.DataTransformObject.LastFiveDaysResultReport;
 
 import java.util.List;
 
@@ -17,4 +17,5 @@ public interface TestcaseResultService {
 
     ChartModel queryLastFiveDaysResult(QueryLastFiveDaysResult queryLastFiveDaysResult);
 
+    List<LastFiveDaysResultReport> queryLastFiveDaysResultReport(QueryLastFiveDaysResult queryLastFiveDaysResult);
 }
