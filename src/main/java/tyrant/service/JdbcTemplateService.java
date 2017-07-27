@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface JdbcTemplateService {
 
-    List<LastFiveDaysResult> queryLastFiveDaysResult(Integer testcaseId);
+    List<LastFiveDaysResult> queryLastSevenDaysResult(Integer testcaseId);
 
 }

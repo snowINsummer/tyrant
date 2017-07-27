@@ -63,13 +63,13 @@ public class TestcaseResultController {
 
     }
 
-    @RequestMapping(value = "/queryLastFiveDaysResult", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryLastSevenDaysResult", method = RequestMethod.POST)
     public RspData queryLastFiveDaysResult(@RequestBody ReqData reqData){
         RspData rspData = new RspData();
         try{
             String json = JSONFormat.getObjectToJson(reqData.getData());
             QueryLastFiveDaysResult queryLastFiveDaysResult = JSONFormat.fromJson(json, QueryLastFiveDaysResult.class);
-            ChartModel chartModel = trService.queryLastFiveDaysResult(queryLastFiveDaysResult);
+            ChartModel chartModel = trService.queryLastSevenDaysResult(queryLastFiveDaysResult);
             rspData.setCode(Constants.CODE_SUCCESS);
             rspData.setData(chartModel);
         }catch (Exception e){
@@ -79,13 +79,13 @@ public class TestcaseResultController {
         return rspData;
     }
 
-    @RequestMapping(value = "/queryLastFiveDaysResultReport", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryLastSevenDaysResultReport", method = RequestMethod.POST)
     public RspData queryLastFiveDaysResultReport(@RequestBody ReqData reqData){
         RspData rspData = new RspData();
         try{
             String json = JSONFormat.getObjectToJson(reqData.getData());
             QueryLastFiveDaysResult queryLastFiveDaysResult = JSONFormat.fromJson(json, QueryLastFiveDaysResult.class);
-            List<LastFiveDaysResultReport> lastFiveDaysResultReport = trService.queryLastFiveDaysResultReport(queryLastFiveDaysResult);
+            List<LastFiveDaysResultReport> lastFiveDaysResultReport = trService.queryLastSevenDaysResultReport(queryLastFiveDaysResult);
             rspData.setCode(Constants.CODE_SUCCESS);
             rspData.setData(lastFiveDaysResultReport);
         }catch (Exception e){

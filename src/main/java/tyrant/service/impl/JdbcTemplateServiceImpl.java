@@ -20,7 +20,7 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<LastFiveDaysResult> queryLastFiveDaysResult(Integer testcaseId) {
+    public List<LastFiveDaysResult> queryLastSevenDaysResult(Integer testcaseId) {
         String sql = "select * from \n" +
                 "(\n" +
                 "\tselect m.MODULE_NAME  from MODULE m\n" +
@@ -42,6 +42,10 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService{
                 "\t\tSELECT date_format(DATE_SUB(NOW(), interval 3 day), '%Y-%m-%d') tempday\n" +
                 "\t\tUNION \n" +
                 "\t\tSELECT date_format(DATE_SUB(NOW(), interval 4 day), '%Y-%m-%d') tempday\n" +
+                "\t\tUNION \n" +
+                "\t\tSELECT date_format(DATE_SUB(NOW(), interval 5 day), '%Y-%m-%d') tempday\n" +
+                "\t\tUNION \n" +
+                "\t\tSELECT date_format(DATE_SUB(NOW(), interval 6 day), '%Y-%m-%d') tempday\n" +
                 "\t\t) temp_days\n" +
                 "\tLEFT JOIN\n" +
                 "\t\t(\n" +

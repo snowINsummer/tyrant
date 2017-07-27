@@ -111,8 +111,8 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
     }
 
     @Override
-    public ChartModel queryLastFiveDaysResult(QueryLastFiveDaysResult queryLastFiveDaysResult) {
-        logger.debug("Start queryLastFiveDaysResult...");
+    public ChartModel queryLastSevenDaysResult(QueryLastFiveDaysResult queryLastFiveDaysResult) {
+        logger.debug("Start queryLastSevenDaysResult...");
         ChartModel chartModel = new ChartModel();
         SeriesModel seriesModel = new SeriesModel();
         List<TestcaseInfo> testcaseInfoList =  queryLastFiveDaysResult.getTestcaseInfoList();
@@ -124,7 +124,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
                 Testcase testcase = testcaseService.queryTestcase(testcaseName);
                 if (null != testcase){
                     testcaseId = testcase.getId();
-                    List<LastFiveDaysResult> lastFiveDaysResultList = jdbcTemplateService.queryLastFiveDaysResult(testcaseId);
+                    List<LastFiveDaysResult> lastFiveDaysResultList = jdbcTemplateService.queryLastSevenDaysResult(testcaseId);
                     LastFiveDaysResult lastFiveDaysResult = lastFiveDaysResultList.get(0);
                     chartModel.addCategoryList(lastFiveDaysResult.getModuleName());
                     Integer success = lastFiveDaysResult.getLastFiveDaysSuccess();
@@ -154,8 +154,8 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
     }
 
     @Override
-    public List<LastFiveDaysResultReport> queryLastFiveDaysResultReport(QueryLastFiveDaysResult queryLastFiveDaysResult) {
-        logger.debug("Start queryLastFiveDaysResultReport...");
+    public List<LastFiveDaysResultReport> queryLastSevenDaysResultReport(QueryLastFiveDaysResult queryLastFiveDaysResult) {
+        logger.debug("Start queryLastSevenDaysResultReport...");
         List<LastFiveDaysResultReport> reportList = new ArrayList<>();
         List<TestcaseInfo> testcaseInfoList =  queryLastFiveDaysResult.getTestcaseInfoList();
         for(TestcaseInfo testcaseInfo : testcaseInfoList){
@@ -173,6 +173,8 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
                 getLastReport(fileList, -2, testcaseName, reportInfoList);
                 getLastReport(fileList, -3, testcaseName, reportInfoList);
                 getLastReport(fileList, -4, testcaseName, reportInfoList);
+                getLastReport(fileList, -5, testcaseName, reportInfoList);
+                getLastReport(fileList, -6, testcaseName, reportInfoList);
             }
             lastFiveDaysResultReport.setListReport(reportInfoList);
             reportList.add(lastFiveDaysResultReport);

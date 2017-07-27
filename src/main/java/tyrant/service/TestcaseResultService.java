@@ -15,7 +15,7 @@ public interface TestcaseResultService {
 
     void saveResult(WSResult wsResult);
 
-    ChartModel queryLastFiveDaysResult(QueryLastFiveDaysResult queryLastFiveDaysResult);
+    ChartModel queryLastSevenDaysResult(QueryLastFiveDaysResult queryLastFiveDaysResult);
 
-    List<LastFiveDaysResultReport> queryLastFiveDaysResultReport(QueryLastFiveDaysResult queryLastFiveDaysResult);
+    List<LastFiveDaysResultReport> queryLastSevenDaysResultReport(QueryLastFiveDaysResult queryLastFiveDaysResult);
 }
