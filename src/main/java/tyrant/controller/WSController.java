@@ -89,7 +89,8 @@ public class WSController {
         String url = "http://test-fk.xxd.com/verify/pre_addBaseInfo.htm";
         Map header = new HashMap();
         header.put("Content-Type","application/x-www-form-urlencoded");
-        header.put("cookie","gr_user_id=8641d984-5347-4b0a-ba27-a24f5e64b5b1; _ga=GA1.2.7A05B3DB-CAD0-440E-AD2D-900081333731.1504591862922; JSESSIONID=CF7BD9000BA2A970373B2498C2B283B9");
+        header.put("Accept-Language","zh-CN,zh;q=0.8");
+        header.put("Cookie","gr_user_id=8641d984-5347-4b0a-ba27-a24f5e64b5b1; _ga=GA1.2.7A05B3DB-CAD0-440E-AD2D-900081333731.1504591862922; JSESSIONID=CF7BD9000BA2A970373B2498C2B283B9");
         String json = "{\n" +
                 "    \"customerForm.accountBalance\": \"1\",\n" +
                 "    \"customerForm.age\": \"37\",\n" +
@@ -133,6 +134,8 @@ public class WSController {
                 "    \"orderNo\": \"S3100170914006\"\n" +
                 "}";
         Map data = JSONFormat.getMapFromJson(json);
+//        json = "orderNo=S3100170915001&customerForm.createdBy=hejunhao&customerForm.createdTime=2017-09-15+15%3A40%3A28.0&customerForm.guarantor=&customerForm.children=&customerForm.name=%E6%A8%8A%E4%BA%9A%E6%B5%8B%E8%AF%95&customerForm.id=28625&customerForm.sex=0&customerForm.education=6&customerForm.idNumber=632626198003213899&customerForm.birthday=1980-03-21&customerForm.age=37&customerForm.idCardAuth=&customerForm.zodiac=1&customerForm.maritalStatus=1&customerForm.idCardAddr=1&customerForm.domicile=1&customerForm.nowResidence=1&customerForm.homePhone=1&customerForm.unitAddress=1&customerForm.unitPhone=1&customerForm.maritalNumYear=1&customerForm.housingConditions=1&customerForm.houseNum=1&customerForm.belongArea=0&customerForm.housePrice=1&customerForm.carNum=1&customerForm.carPrice=1&customerForm.accountBalance=1&customerForm.officeCondition=0&customerForm.isOfficeHouse=0&customerForm.constellation=%E7%99%BD%E7%BE%8A%E5%BA%A7&customerForm.mobilePhonesNum=13319878763&customerForm.email=zhangli@xinxindai.com&customerForm.officeDateStart=&customerForm.officeDateEnd=&customerForm.officeTotalArea=1&customerForm.houseDateStart=&customerForm.houseDateEnd=&customerForm.customerVocation=610";
+
 //        ResponseInfo responseInfo = httpClientUtil.executePostFormUrlencoded(url,false,header,data,null);
         ResponseInfo responseInfo;
         try {
@@ -145,6 +148,5 @@ public class WSController {
 //        rspData.setData(responseInfo);
         return rspData;
     }
-
 
 }
