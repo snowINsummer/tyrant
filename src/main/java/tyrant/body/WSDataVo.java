@@ -13,6 +13,7 @@ public class WSDataVo {
     private Map<String,String> headers;
     private Map<String,String> parameters;
     private String json;
+    private boolean noSign;
     Part filePart;
 
     public String getUrl() {
@@ -53,6 +54,14 @@ public class WSDataVo {
 
     public void setJson(String json) {
         this.json = json;
+    }
+
+    public boolean isNoSign() {
+        return noSign;
+    }
+
+    public void setNoSign(boolean noSign) {
+        this.noSign = noSign;
     }
 
     public Part getFilePart() {

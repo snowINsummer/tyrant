@@ -41,8 +41,14 @@ public class WSServiceImpl implements WSService {
         HttpClientUtil httpClientUtil = new HttpClientUtil();
         ResponseInfo responseInfo = new ResponseInfo();
         String json = wsResult.getJson();
-        String newS = getClientSign(httpClientUtil,headers,json);
-        headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
+        if (!wsResult.isNoSign()){
+            // 判断是否实时获取sign值
+            httpClientUtil.setGetRspHeaders(true);
+            String newS = getClientSign(httpClientUtil,headers,json);
+            headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
+        }else {
+            httpClientUtil.setGetRspHeaders(false);
+        }
         if (type.equals(Constants.WS_GET)){
             responseInfo = httpClientUtil.executeGetKeepConnWithHeaders(url,headers);
         }else if(type.equals(Constants.WS_POST)){
