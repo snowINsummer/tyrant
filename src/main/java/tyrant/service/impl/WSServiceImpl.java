@@ -36,18 +36,21 @@ public class WSServiceImpl implements WSService {
         for(Map.Entry<String, String> entry : parameters.entrySet()){
             paraStr += entry.getKey() + "=" + entry.getValue() + "&";
         }
-        url += "?" + paraStr;String type = wsResult.getType().toUpperCase();
+        if (!paraStr.isEmpty()){
+            url += "?" + paraStr;
+        }
+        String type = wsResult.getType().toUpperCase();
         Map<String, String> headers = wsResult.getHeaders();
         HttpClientUtil httpClientUtil = new HttpClientUtil();
         ResponseInfo responseInfo = new ResponseInfo();
         String json = wsResult.getJson();
         if (!wsResult.isNoSign()){
             // 判断是否实时获取sign值
-            httpClientUtil.setGetRspHeaders(true);
+            httpClientUtil.setGetRspHeaders(false);
             String newS = getClientSign(httpClientUtil,headers,json);
             headers.put(Constants.JSON_TEMPLATE_HEADERS_S, newS);
         }else {
-            httpClientUtil.setGetRspHeaders(false);
+            httpClientUtil.setGetRspHeaders(true);
         }
         if (type.equals(Constants.WS_GET)){
             responseInfo = httpClientUtil.executeGetKeepConnWithHeaders(url,headers);

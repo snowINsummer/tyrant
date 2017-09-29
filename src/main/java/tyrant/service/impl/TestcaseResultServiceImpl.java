@@ -1,7 +1,6 @@
 package tyrant.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
@@ -28,9 +27,10 @@ import java.util.*;
  */
 
 @Service
+@Slf4j
 public class TestcaseResultServiceImpl implements TestcaseResultService {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     ProductService productService;
@@ -112,7 +112,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
 
     @Override
     public ChartModel queryLastSevenDaysResult(QueryLastFiveDaysResult queryLastFiveDaysResult) {
-        logger.debug("Start queryLastSevenDaysResult...");
+        log.debug("Start queryLastSevenDaysResult...");
         ChartModel chartModel = new ChartModel();
         SeriesModel seriesModel = new SeriesModel();
         List<TestcaseInfo> testcaseInfoList =  queryLastFiveDaysResult.getTestcaseInfoList();
@@ -143,9 +143,9 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
                     seriesModel.addPassRateData(passRate);
                 }
             }
-            logger.debug("testcaseId:"+testcaseId);
-            logger.debug("testcaseName:"+testcaseName);
-            logger.debug("evironment:"+evironment);
+            log.debug("testcaseId:"+testcaseId);
+            log.debug("testcaseName:"+testcaseName);
+            log.debug("evironment:"+evironment);
 
         }
 
@@ -155,7 +155,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService {
 
     @Override
     public List<LastFiveDaysResultReport> queryLastSevenDaysResultReport(QueryLastFiveDaysResult queryLastFiveDaysResult) {
-        logger.debug("Start queryLastSevenDaysResultReport...");
+        log.debug("Start queryLastSevenDaysResultReport...");
         List<LastFiveDaysResultReport> reportList = new ArrayList<>();
         List<TestcaseInfo> testcaseInfoList =  queryLastFiveDaysResult.getTestcaseInfoList();
         for(TestcaseInfo testcaseInfo : testcaseInfoList){

@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
 import tyrant.common.constants.Constants;
+import tyrant.common.enums.TestEnum;
 import tyrant.dao.IProductDao;
 import tyrant.entity.Product;
 import tyrant.service.ProductService;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by zhangli on 9/5/2017.
@@ -21,6 +22,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> queryProduct() {
+//        TestDoService testDoService = new TestDoService(TestEnum.TEST);
+//        testDoService.doS("1");
+//        System.out.println(Collections.emptyList());
+//        System.out.println();
         return iProductDao.findAll();
     }
 

@@ -8,6 +8,8 @@ import java.util.List;
  * Created by zhangli on 9/5/2017.
  */
 @Entity
+//@Data // 自动生成set get方法
+//@NoArgsConstructor // 无参构造函数
 public class Module {
 
     @Id
