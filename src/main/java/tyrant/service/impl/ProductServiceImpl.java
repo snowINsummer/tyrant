@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import qa.utils.DateFormat;
 import tyrant.common.constants.Constants;
-import tyrant.common.enums.TestEnum;
 import tyrant.dao.IProductDao;
 import tyrant.entity.Product;
 import tyrant.service.ProductService;
