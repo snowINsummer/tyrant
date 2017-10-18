@@ -55,7 +55,7 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService{
                 "\t\t\tselect ss.id,ss.BATCH_NO_STR,ss.s from \n" +
                 "\t\t\t\t(\n" +
                 "\t\t\t\tselect b.id,b.BATCH_NO_STR,SUBSTRING(b.BATCH_NO_STR FROM 1 FOR 10) as 's' from BATCH_NO b \n" +
-                "\t\t\t\twhere b.TESTCASE_ID=" + testcaseId + " and b.BATCH_NO_STR>date_format(DATE_SUB(NOW(), interval 5 day), '%Y-%m-%d')\n" +
+                "\t\t\t\twhere b.TESTCASE_ID=" + testcaseId + " and b.BATCH_NO_STR>date_format(DATE_SUB(NOW(), interval 7 day), '%Y-%m-%d')\n" +
                 "\t\t\t\tORDER BY b.BATCH_NO_STR desc \n" +
                 "\t\t\t\t) ss \n" +
                 "\t\t\tGROUP BY ss.s \n" +
